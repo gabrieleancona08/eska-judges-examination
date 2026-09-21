@@ -2,6 +2,7 @@
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
 const cloud = Boolean(window.ESKA_SUPABASE) && !["localhost", "127.0.0.1"].includes(location.hostname);
+const publicBase = location.origin + location.pathname.replace(/\/[^/]*$/, "").replace(/\/$/, "");
 
 const state = {
   language: "en",
@@ -290,7 +291,7 @@ function renderAdmin(payload) {
   $("#sessionBtn").disabled = !session || session.status !== "waiting";
   if (active) {
     if (cloud) {
-      const qrKey = session.id + "@" + location.origin;
+      const qrKey = session.id + "@" + publicBase;
       if ($("#adminQr").dataset.qrKey !== qrKey) loadCloudQr(session.id, qrKey);
     } else {
       const qrUrl = "/api/admin/qr?exam=" + encodeURIComponent(session.id);
@@ -327,7 +328,7 @@ function renderAdmin(payload) {
 
 async function loadCloudQr(examId, qrKey) {
   try {
-    const payload = await api("/api/admin/qr", { examId, publicOrigin: location.origin });
+    const payload = await api("/api/admin/qr", { examId, publicOrigin: publicBase });
     $("#adminQr").src = payload.dataUrl;
     $("#adminQr").dataset.qrKey = qrKey;
     if ($("#qrDialog").open) $("#largeQr").src = payload.dataUrl;
@@ -392,7 +393,7 @@ async function handleAction(action) {
       renderAdmin(await api("/api/admin/state"));
     }
     if (action === "copy") {
-      await navigator.clipboard.writeText(location.origin + "/?join=" + encodeURIComponent(state.admin.session.id));
+      await navigator.clipboard.writeText(publicBase + "/?join=" + encodeURIComponent(state.admin.session.id));
       toast("Participant link copied.");
     }
     if (action === "download") cloud ? await downloadResults() : window.location.assign("/api/admin/export");
