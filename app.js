@@ -548,7 +548,7 @@ async function initialize() {
   if (cloud) {
     $("#adminIdentityLabel").textContent = "Username";
     $("#username").type = "text";
-    $("#username").value = "eska.admin";
+    $("#username").value = "";
   }
   const names = new Intl.DisplayNames(["en"], { type: "region" });
   const countries = [];
