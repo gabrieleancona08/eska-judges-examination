@@ -1064,9 +1064,20 @@ th {
 }
 @media(max-width:650px) {
   #birthDate {
-    inline-size: 100%;
-    min-inline-size: 0;
-    max-inline-size: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    width: -webkit-fill-available;
+    inline-size: -webkit-fill-available;
+    min-width: 0!important;
+    min-inline-size: 0!important;
+    max-width: 100%!important;
+    max-inline-size: 100%!important;
+    font-family: inherit;
+    background: white;
+  }
+  #birthDate::-webkit-date-and-time-value {
+    min-width: 0;
+    text-align: left;
   }
   .field-grid {
     grid-template-columns: 1fr;
