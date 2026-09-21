@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101010" />
+    <meta name="description" content="Online karate examinations with QR registration, a shared waiting lobby and instant results." />
+    <title>
+      ESKA Judges Examination
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <button class="brand" data-action="home" aria-label="Go to the homepage">
+          <img class="eska-logo" src="eska-logo.png" alt="European Shotokan Karate-Do Association" />
+          <span>
+            ESKA JUDGES EXAMINATION
+          </span>
+        </button>
+        <div class="top-actions">
+          <span class="live">
+            <i>
+            </i>
+            <span>
+              Examination portal
+            </span>
+          </span>
+        </div>
+      </header>
+      <main>
+        <section id="welcome" class="screen active">
+          <div class="welcome-copy">
+            <p class="eyebrow" data-i18n="welcomeEyebrow">
+              Welcome to the digital dōjō
+            </p>
+            <h1 data-i18n="welcomeTitle">
+              Ready to put your knowledge
+              <br>
+              <em>
+                to the test?
+              </em>
+            </h1>
+            <p class="lead">
+              Your digital examination portal. The administrator opens registration and starts the examination for all participants together.
+            </p>
+            <div class="welcome-actions">
+              <button class="btn primary" data-action="teacher">
+                <span>
+                  Login
+                </span>
+                <span>
+                  →
+                </span>
+              </button>
+            </div>
+            <div class="proof">
+              <div>
+                <strong>
+                  2 + 1
+                </strong>
+                <span data-i18n="questions">
+                  Exams + example
+                </span>
+              </div>
+              <div>
+                <strong>
+                  Mobile
+                </strong>
+                <span data-i18n="minutes">
+                  Participant-friendly
+                </span>
+              </div>
+              <div>
+                <strong>
+                  80%
+                </strong>
+                <span data-i18n="pass">
+                  Passing score
+                </span>
+              </div>
+            </div>
+          </div>
+          <aside class="qr-card">
+            <div class="qr-head">
+              <span>
+                Your journey to the examination
+              </span>
+              <i>
+              </i>
+            </div>
+            <div class="journey">
+              <span>
+                01
+              </span>
+              <h2>
+                Scan the QR code
+              </h2>
+              <p>
+                Provided by your examination administrator.
+              </p>
+              <span>
+                02
+              </span>
+              <h2>
+                Register your details
+              </h2>
+              <p>
+                Enter your details and join the waiting lobby.
+              </p>
+              <span>
+                03
+              </span>
+              <h2>
+                Start together
+              </h2>
+              <p>
+                Your administrator starts the examination.
+              </p>
+            </div>
+          </aside>
+        </section>
+        <section id="login" class="screen centered">
+          <button class="back" data-action="home">
+            ←
+            <span data-i18n="back">
+              Back
+            </span>
+          </button>
+          <div class="form-card">
+            <span class="step-pill">
+              Participant registration
+            </span>
+            <h2>
+              Welcome to your examination
+            </h2>
+            <p>
+              Please enter your personal details.
+            </p>
+            <form id="nameForm">
+              <div class="field-grid">
+                <div>
+                  <label for="firstName">
+                    First name
+                  </label>
+                  <input id="firstName" autocomplete="given-name" required maxlength="60" />
+                </div>
+                <div>
+                  <label for="lastName">
+                    Last name
+                  </label>
+                  <input id="lastName" autocomplete="family-name" required maxlength="60" />
+                </div>
+              </div>
+              <label for="birthDate">
+                Date of birth
+              </label>
+              <input id="birthDate" type="date" autocomplete="bday" min="1900-01-01" required />
+              <label for="nation">
+                Nation
+              </label>
+              <select id="nation" autocomplete="country" required>
+                <option value="">
+                  Please select
+                </option>
+              </select>
+              <p class="privacy">
+                Your details are stored centrally for examination administration. Contact your examination administrator if you have questions about how your information is used.
+              </p>
+              <p id="joinError" class="form-error" role="alert">
+              </p>
+              <button class="btn primary full" type="submit">
+                <span>
+                  Continue
+                </span>
+                <span>
+                  →
+                </span>
+              </button>
+            </form>
+          </div>
+        </section>
+        <section id="examChoice" class="screen centered">
+          <div class="form-card">
+            <span class="step-pill">Examination selection</span>
+            <h2>Choose your examination</h2>
+            <p>Choose your role, then wait for the administrator to start.</p>
+            <form id="examChoiceForm">
+              <label for="participantExam">Examination</label>
+              <select id="participantExam" required>
+                <option value="">Please select</option>
+                <option value="judge">Judge examination — 41 questions</option>
+                <option value="referee">Referee examination — 57 questions</option>
+              </select>
+              <p id="choiceError" class="form-error" role="alert"></p>
+              <button class="btn primary full" type="submit">Join the waiting lobby →</button>
+            </form>
+          </div>
+        </section>
+        <section id="adminLogin" class="screen centered">
+          <button class="back" data-action="home">
+            ← Back
+          </button>
+          <div class="form-card">
+            <span class="step-pill">
+              Examination administration
+            </span>
+            <h2>
+              Admin login
+            </h2>
+            <p>
+              Sign in with your personal account.
+            </p>
+            <form id="adminLoginForm">
+              <label for="username" id="adminIdentityLabel">
+                Username
+              </label>
+              <input id="username" autocomplete="username" required maxlength="254" />
+              <label for="password">
+                Password
+              </label>
+              <input id="password" type="password" autocomplete="current-password" required />
+              <p id="loginError" class="form-error" role="alert">
+              </p>
+              <button class="btn primary full" type="submit">
+                Sign in →
+              </button>
+            </form>
+          </div>
+        </section>
+        <section id="lobby" class="screen centered">
+          <div class="form-card lobby-card">
+            <div class="lobby-pulse">
+              ◎
+            </div>
+            <span class="step-pill">
+              Waiting lobby
+            </span>
+            <h2>
+              You are registered.
+            </h2>
+            <p id="lobbyName">
+            </p>
+            <div class="lobby-detail">
+              <strong id="lobbyExam">
+              </strong>
+              <span id="lobbyTiming">
+              </span>
+            </div>
+            <p>
+              Please keep this page open. Your examination opens automatically when the administrator starts it.
+            </p>
+            <p id="lobbyConnection" role="status">
+              Connecting …
+            </p>
+          </div>
+        </section>
+        <section id="quiz" class="screen quiz-screen">
+          <div class="quiz-top">
+            <div>
+              <span class="eyebrow" data-i18n="exam">
+                ESKA Competition Rules Examination
+              </span>
+              <h2 id="greeting">
+                Good luck!
+              </h2>
+            </div>
+            <div class="quiz-status">
+              <div class="timer" id="timer">
+                10:00
+              </div>
+              <div class="progress-label">
+                <strong id="progressText">
+                  1 / 10
+                </strong>
+                <span data-i18n="answered">
+                  Question
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="progress">
+            <i id="progressBar">
+            </i>
+          </div>
+          <article class="question-card">
+            <div class="question-meta">
+              <span id="questionNumber">
+                01
+              </span>
+              <span id="questionType">
+                SINGLE CHOICE
+              </span>
+            </div>
+            <h3 id="questionText">
+            </h3>
+            <div id="answers" class="answers">
+            </div>
+          </article>
+          <div class="quiz-nav">
+            <button class="btn ghost" id="prevBtn" data-action="prev">
+              ←
+              <span data-i18n="previous">
+                Back
+              </span>
+            </button>
+            <button class="btn primary" id="nextBtn" data-action="next">
+              <span data-i18n="next">
+                Next question
+              </span>
+              <span>
+                →
+              </span>
+            </button>
+          </div>
+        </section>
+        <section id="result" class="screen centered">
+          <div class="result-card">
+            <div class="result-icon">
+              ✓
+            </div>
+            <p class="eyebrow" data-i18n="complete">
+              Examination completed
+            </p>
+            <h2 id="resultTitle">
+              Examination completed.
+            </h2>
+            <p id="resultMessage">
+            </p>
+            <div class="score-ring" id="scoreRing">
+              <div>
+                <strong id="scorePercent">
+                  0%
+                </strong>
+                <span data-i18n="score">
+                  Score
+                </span>
+              </div>
+            </div>
+            <div class="result-stats">
+              <div>
+                <span data-i18n="correct">
+                  Correct
+                </span>
+                <strong id="correctCount">
+                  0
+                </strong>
+              </div>
+              <div>
+                <span data-i18n="wrong">
+                  Errors
+                </span>
+                <strong id="wrongCount">
+                  0
+                </strong>
+              </div>
+              <div>
+                <span data-i18n="status">
+                  Status
+                </span>
+                <strong id="statusText">
+                  —
+                </strong>
+              </div>
+            </div>
+            <button class="btn primary full" data-action="review">
+              <span data-i18n="review">
+                Review answers
+              </span>
+              <span>
+                →
+              </span>
+            </button>
+            <p class="privacy">
+              Your result has been saved for your examination administrator.
+            </p>
+          </div>
+        </section>
+        <section id="review" class="screen quiz-screen">
+          <button class="back" data-action="result">
+            ←
+            <span data-i18n="backResult">
+              Back to results
+            </span>
+          </button>
+          <div class="review-head">
+            <p class="eyebrow" data-i18n="yourAnswers">
+              Your answers
+            </p>
+            <h2 data-i18n="reviewTitle">
+              Detailed review
+            </h2>
+          </div>
+          <div id="reviewList" class="review-list">
+          </div>
+        </section>
+        <section id="admin" class="screen admin-screen">
+          <div class="admin-heading">
+            <div>
+              <p class="eyebrow">
+                ESKA JUDGES EXAMINATION · ADMIN
+              </p>
+              <h1>
+                ESKA Competition Rules Examination
+              </h1>
+              <p>
+                Configure examinations, monitor participants and export results.
+              </p>
+            </div>
+            <button class="btn ghost" data-action="logout">
+              Sign out →
+            </button>
+          </div>
+          <div class="admin-grid">
+            <aside class="control-card">
+              <div class="admin-card-title">
+                <span class="admin-icon">
+                  ⌁
+                </span>
+                <div>
+                  <strong>
+                    Prepare an examination
+                  </strong>
+                  <small id="sessionCode">
+                    New examination session
+                  </small>
+                </div>
+              </div>
+              <label for="examSelect">
+                Session type
+              </label>
+              <select id="examSelect">
+              </select>
+              <p id="examNotice" class="admin-note">
+              </p>
+              <label for="timeLimit">
+                Time limit
+              </label>
+              <select id="timeLimit">
+                <option value="0">
+                  No time limit
+                </option>
+                <option value="5">
+                  5 Minutes
+                </option>
+                <option value="10" selected>
+                  10 Minutes
+                </option>
+                <option value="15">
+                  15 Minutes
+                </option>
+                <option value="20">
+                  20 Minutes
+                </option>
+                <option value="30">
+                  30 Minutes
+                </option>
+                <option value="60">
+                  60 Minutes
+                </option>
+              </select>
+              <button class="btn primary full" id="activateBtn" data-action="activate">
+                Activate QR code
+              </button>
+              <div id="qrPanel" hidden>
+                <div class="admin-qr">
+                  <img id="adminQr" alt="Participant registration QR code" />
+                </div>
+                <button class="btn ghost full" data-action="copy">
+                  Copy participant link
+                </button>
+                <button class="btn ghost full" data-action="enlarge-qr">Show large QR code</button>
+                <p class="admin-note">
+                  Participants can now register and wait in the lobby.
+                </p>
+                <button class="btn primary full" id="sessionBtn" data-action="session">
+                  Start examination for everyone
+                </button>
+                <button class="btn ghost full" id="closeBtn" data-action="close">
+                  Close examination session
+                </button>
+              </div>
+              <p id="adminError" class="form-error" role="alert">
+              </p>
+            </aside>
+            <div class="results-panel">
+              <div class="stats-row">
+                <div>
+                  <span>
+                    PARTICIPANTS
+                  </span>
+                  <strong id="adminTotal">
+                    0
+                  </strong>
+                </div>
+                <div>
+                  <span>
+                    PASSED
+                  </span>
+                  <strong class="green" id="adminPassed">
+                    0
+                  </strong>
+                </div>
+                <div>
+                  <span>
+                    FAILED
+                  </span>
+                  <strong class="red" id="adminFailed">
+                    0
+                  </strong>
+                </div>
+                <div>
+                  <span>
+                    AVERAGE SCORE
+                  </span>
+                  <strong id="adminAverage">
+                    0%
+                  </strong>
+                </div>
+              </div>
+              <div class="table-card">
+                <div class="table-head">
+                  <div>
+                    <h2>
+                      Live results
+                    </h2>
+                    <p id="sessionStatus">
+                      Examination not started
+                    </p>
+                  </div>
+                  <button class="btn ghost" data-action="download">
+                    ↓ Download CSV
+                  </button>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Date of birth
+                        </th>
+                        <th>
+                          Nation
+                        </th>
+                        <th>
+                          Examination
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                        <th>
+                          Correct
+                        </th>
+                        <th>
+                          Errors
+                        </th>
+                        <th>
+                          Score
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="resultsBody">
+                    </tbody>
+                  </table>
+                </div>
+                <div id="emptyResults" class="empty-results">
+                  <span>
+                    ◎
+                  </span>
+                  <strong>
+                    No submissions yet
+                  </strong>
+                  <p>
+                    New results appear here automatically.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <span>
+          © 2026 ESKA Judges Examination
+        </span>
+        <span data-i18n="footer">
+          Learn karate. Test your knowledge.
+        </span>
+      </footer>
+    </div>
+    <div id="toast" class="toast" role="status">
+      Link copied
+    </div>
+    <dialog id="qrDialog" class="qr-dialog" aria-labelledby="qrDialogTitle">
+      <button class="dialog-close" data-action="close-qr" aria-label="Close QR code">×</button>
+      <p class="eyebrow">ESKA Judges Examination</p>
+      <h2 id="qrDialogTitle">Scan to join the examination</h2>
+      <img id="largeQr" alt="Large participant registration QR code" />
+      <p>Enter your details and wait for the administrator to start.</p>
+      <button class="btn ghost" data-action="copy">Copy participant link</button>
+    </dialog>
+    <dialog id="gradingDialog" class="grading-dialog" aria-labelledby="gradingTitle">
+      <button class="dialog-close" data-action="close-grading" aria-label="Close written-answer review">×</button>
+      <p class="eyebrow">Written-answer review</p>
+      <h2 id="gradingTitle">Review written responses</h2>
+      <form id="gradingForm">
+        <div id="gradingQuestions"></div>
+        <p id="gradingError" class="form-error" role="alert"></p>
+        <button class="btn primary full" type="submit">Save grades and finalize result</button>
+      </form>
+    </dialog>
+    <script src="supabase-config.js"></script>
+    <script src="app.js">
+    </script>
+  </body>
+</html>
