@@ -403,6 +403,12 @@ main {
   border-color: var(--red);
   box-shadow: 0 0 0 3px rgba(231,75,54,.12);
 }
+#birthDate {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
 .full {
   width: 100%;
   margin-top: 14px;
@@ -1057,6 +1063,11 @@ th {
   }
 }
 @media(max-width:650px) {
+  #birthDate {
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
   .field-grid {
     grid-template-columns: 1fr;
   }
