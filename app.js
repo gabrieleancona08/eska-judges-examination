@@ -63,10 +63,10 @@ async function api(path, data) {
 }
 
 async function cloudLogin(credentials) {
-  const response = await fetch(window.ESKA_SUPABASE.url + "/auth/v1/token?grant_type=password", {
+  const response = await fetch(window.ESKA_SUPABASE.url + "/functions/v1/examination-api", {
     method: "POST",
     headers: { apikey: window.ESKA_SUPABASE.publishableKey, "Content-Type": "application/json" },
-    body: JSON.stringify({ email: credentials.username, password: credentials.password }),
+    body: JSON.stringify({ path: "/api/login", data: credentials }),
   });
   const payload = await response.json();
   if (!response.ok) {
@@ -74,7 +74,7 @@ async function cloudLogin(credentials) {
     error.status = response.status;
     throw error;
   }
-  sessionStorage.setItem("eska_admin_token", payload.access_token);
+  sessionStorage.setItem("eska_admin_token", payload.accessToken);
   return { ok: true };
 }
 
@@ -546,8 +546,9 @@ $("#examSelect").addEventListener("change", () => {
 
 async function initialize() {
   if (cloud) {
-    $("#adminIdentityLabel").textContent = "Email address";
-    $("#username").type = "email";
+    $("#adminIdentityLabel").textContent = "Username";
+    $("#username").type = "text";
+    $("#username").value = "eska.admin";
   }
   const names = new Intl.DisplayNames(["en"], { type: "region" });
   const countries = [];
