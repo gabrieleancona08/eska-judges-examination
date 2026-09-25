@@ -78,6 +78,21 @@ async function cloudLogin(credentials) {
   return { ok: true };
 }
 
+async function saveRecoveredPassword(accessToken, password) {
+  const response = await fetch(window.ESKA_SUPABASE.url + "/functions/v1/examination-api", {
+    method: "POST",
+    headers: {
+      apikey: window.ESKA_SUPABASE.publishableKey,
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ path: "/api/recovery-password", data: { password } }),
+  });
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || "The password could not be changed.");
+  return payload;
+}
+
 function csvCell(value) {
   const text = String(value ?? "");
   return '"' + (/^[=+\-@]/.test(text.trim()) ? "'" : "") + text.replaceAll('"', '""') + '"';
@@ -540,6 +555,37 @@ $("#examChoiceForm").addEventListener("submit", async (event) => {
   }
 });
 
+$("#passwordRecoveryForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = event.submitter;
+  const password = $("#newPassword").value;
+  const confirmation = $("#confirmPassword").value;
+  const message = $("#passwordRecoveryError");
+  message.textContent = "";
+  if (password.length < 12) {
+    message.textContent = "The password must contain at least 12 characters.";
+    return;
+  }
+  if (password !== confirmation) {
+    message.textContent = "The passwords do not match.";
+    return;
+  }
+  button.disabled = true;
+  try {
+    await saveRecoveredPassword(state.recoveryToken, password);
+    state.recoveryToken = null;
+    history.replaceState(null, "", location.pathname + location.search);
+    sessionStorage.removeItem("eska_admin_token");
+    $("#passwordRecoveryForm").reset();
+    toast("Password changed. You can now sign in.");
+    showScreen("adminLogin");
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
 $("#examSelect").addEventListener("change", () => {
   $("#examNotice").textContent = state.admin.exams.find((exam) => exam.id === $("#examSelect").value)?.notice || "";
 });
@@ -565,6 +611,18 @@ async function initialize() {
   ).join(""));
   $("#birthDate").max = new Date().toLocaleDateString("en-CA");
   translate();
+  const recovery = new URLSearchParams(location.hash.slice(1));
+  if (recovery.get("type") === "recovery" && recovery.get("access_token")) {
+    state.recoveryToken = recovery.get("access_token");
+    showScreen("passwordRecovery");
+    setInterval(updateClock, 1000);
+    return;
+  }
+  if (recovery.get("error")) {
+    history.replaceState(null, "", location.pathname + location.search);
+    showScreen("adminLogin");
+    $("#loginError").textContent = "This password recovery link is invalid or has expired. Please request a new email.";
+  }
   const examId = new URLSearchParams(location.search).get("join");
   if (examId) {
     try {
