@@ -100,11 +100,11 @@ function csvCell(value) {
 
 async function downloadResults() {
   const payload = await api("/api/admin/export");
-  const heading = ["First name", "Last name", "Date of birth", "Nation", "Examination", "Status", "Correct", "Errors", "Percentage"];
+  const heading = ["First name", "Last name", "Birthday", "Country of candidate", "E-mail address", "Examination", "Status", "Correct", "Errors", "Percentage"];
   const lines = payload.rows.map((row) => {
     const result = row.result || {};
     const status = row.result ? (result.passed ? "Passed" : "Failed") : "Pending";
-    return [row.firstName, row.lastName, row.birthDate, row.nation, row.examTitle, status,
+    return [row.firstName, row.lastName, row.birthDate, row.nation, row.email, row.examTitle, status,
       result.correct ?? "", result.errors ?? "", result.percent ?? ""].map(csvCell).join(";");
   });
   const blob = new Blob(["\ufeff" + [heading.map(csvCell).join(";"), ...lines].join("\n")], { type: "text/csv;charset=utf-8" });
@@ -332,7 +332,7 @@ function renderAdmin(payload) {
     const status = result ? (result.pending ? "AWAITING REVIEW" : result.passed ? "PASSED" : "FAILED") :
       (session.status === "waiting" ? "WAITING" : "IN PROGRESS");
     return '<tr><td><strong>' + escapeHtml(row.firstName + " " + row.lastName) + '</strong></td><td>' +
-      escapeHtml(row.birthDate) + '</td><td>' + escapeHtml(row.nation) + '</td><td>' + escapeHtml(row.examTitle) + '</td><td><span class="badge ' +
+      escapeHtml(row.birthDate) + '</td><td>' + escapeHtml(row.nation) + '</td><td>' + escapeHtml(row.email || '—') + '</td><td>' + escapeHtml(row.examTitle) + '</td><td><span class="badge ' +
       (result && !result.pending && !result.passed ? "fail" : "") + '">' + status + '</span>' +
       (result && result.pending ? '<button class="review-button" data-review="' + row.id + '">Review written answers</button>' : '') + '</td><td>' +
       (result ? result.correct + " / " + result.total : "—") + '</td><td>' +
@@ -530,7 +530,7 @@ $("#nameForm").addEventListener("submit", async (event) => {
     await api("/api/join", {
       examId: new URLSearchParams(location.search).get("join"),
       firstName: $("#firstName").value.trim(), lastName: $("#lastName").value.trim(),
-      birthDate: $("#birthDate").value, nation: $("#nation").value,
+      birthDate: $("#birthDate").value, nation: $("#nation").value, email: $("#email").value.trim(),
     });
     receiveParticipant(await api("/api/participant"), true);
   } catch (error) {

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261120" />
+    <link rel="stylesheet" href="styles.css?v=20261120b" />
   </head>
   <body>
     <div class="shell">
@@ -92,17 +92,19 @@
                 </div>
               </div>
               <label for="birthDate">
-                Date of birth
+                Birthday
               </label>
               <input id="birthDate" type="date" autocomplete="bday" min="1900-01-01" required />
               <label for="nation">
-                Nation
+                Country of candidate
               </label>
               <select id="nation" autocomplete="country" required>
                 <option value="">
                   Please select
                 </option>
               </select>
+              <label for="email">E-mail address</label>
+              <input id="email" type="email" autocomplete="email" maxlength="254" required />
               <p class="privacy">
                 Your details are stored centrally for examination administration. Contact your examination administrator if you have questions about how your information is used.
               </p>
@@ -128,8 +130,8 @@
               <label for="participantExam">Examination</label>
               <select id="participantExam" required>
                 <option value="">Please select</option>
-                <option value="judge">Judge examination — 41 questions</option>
-                <option value="referee">Referee examination — 57 questions</option>
+                <option value="judge">Level B Judge — 41 questions</option>
+                <option value="referee">Level A Referee — 57 questions</option>
               </select>
               <p id="choiceError" class="form-error" role="alert"></p>
               <button class="btn primary full" type="submit">Join the waiting lobby →</button>
@@ -495,10 +497,13 @@
                           Name
                         </th>
                         <th>
-                          Date of birth
+                          Birthday
                         </th>
                         <th>
-                          Nation
+                          Country of candidate
+                        </th>
+                        <th>
+                          E-mail address
                         </th>
                         <th>
                           Examination
@@ -568,7 +573,7 @@
       </form>
     </dialog>
     <script src="supabase-config.js?v=20260921"></script>
-    <script src="app.js?v=20260925a">
+    <script src="app.js?v=20261120b">
     </script>
   </body>
 </html>
