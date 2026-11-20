@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#003cdb" />
     <meta name="description" content="Online karate examinations with QR registration, a shared waiting lobby and instant results." />
     <title>
       ESKA Judges Examination
@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260921d" />
+    <link rel="stylesheet" href="styles.css?v=20261120" />
   </head>
   <body>
     <div class="shell">
@@ -35,93 +35,28 @@
       <main>
         <section id="welcome" class="screen active">
           <div class="welcome-copy">
-            <p class="eyebrow" data-i18n="welcomeEyebrow">
-              Welcome to the digital dōjō
-            </p>
-            <h1 data-i18n="welcomeTitle">
-              Ready to put your knowledge
-              <br>
-              <em>
-                to the test?
-              </em>
-            </h1>
-            <p class="lead">
-              Your digital examination portal. The administrator opens registration and starts the examination for all participants together.
-            </p>
+            <p class="eyebrow">European Shotokan Karate-Do Association</p>
+            <h1>Precision.<br>Discipline.<br><em>Knowledge.</em></h1>
+            <p class="lead">The standard starts with you. The ESKA examination portal for judges and referees.</p>
             <div class="welcome-actions">
-              <button class="btn primary" data-action="teacher">
-                <span>
-                  Login
-                </span>
-                <span>
-                  →
-                </span>
-              </button>
+              <button class="btn primary" data-action="teacher"><span>Administrator login</span><span aria-hidden="true">↗</span></button>
+              <p class="entry-note">Taking an examination?<br>Scan your administrator’s QR code.</p>
             </div>
-            <div class="proof">
-              <div>
-                <strong>
-                  2 + 1
-                </strong>
-                <span data-i18n="questions">
-                  Exams + example
-                </span>
-              </div>
-              <div>
-                <strong>
-                  Mobile
-                </strong>
-                <span data-i18n="minutes">
-                  Participant-friendly
-                </span>
-              </div>
-              <div>
-                <strong>
-                  80%
-                </strong>
-                <span data-i18n="pass">
-                  Passing score
-                </span>
-              </div>
+            <div class="exam-index" aria-label="Available examinations">
+              <div><span>01 / JUDGE</span><strong>41 <small>questions</small></strong></div>
+              <div><span>02 / REFEREE</span><strong>57 <small>questions</small></strong></div>
+              <p>One shared start.<br>Your individual result.</p>
             </div>
           </div>
-          <aside class="qr-card">
-            <div class="qr-head">
-              <span>
-                Your journey to the examination
-              </span>
-              <i>
-              </i>
-            </div>
-            <div class="journey">
-              <span>
-                01
-              </span>
-              <h2>
-                Scan the QR code
-              </h2>
-              <p>
-                Provided by your examination administrator.
-              </p>
-              <span>
-                02
-              </span>
-              <h2>
-                Register your details
-              </h2>
-              <p>
-                Enter your details and join the waiting lobby.
-              </p>
-              <span>
-                03
-              </span>
-              <h2>
-                Start together
-              </h2>
-              <p>
-                Your administrator starts the examination.
-              </p>
-            </div>
+          <aside class="dojo-panel" aria-label="The examination process">
+            <div class="panel-caption"><span>ESKA / EXAMINATION</span><span>空手道</span></div>
+            <div class="emblem-stage"><span class="emblem-word" aria-hidden="true">ESKA</span><img src="eska-logo.png" alt="ESKA karate emblem"/><span class="emblem-label">THE ART OF<br>KNOWING WHY.</span></div>
+            <div class="process-heading">Your next steps <span>01 — 03</span></div>
+            <ol class="process-list">
+              <li><span>01</span><div><h2>Scan & register</h2><p>Use the QR code provided by your administrator.</p></div></li>
+              <li><span>02</span><div><h2>Take your place</h2><p>Enter your details and join the waiting lobby.</p></div></li>
+              <li><span>03</span><div><h2>Show your knowledge</h2><p>Start together. Receive your result after submission.</p></div></li>
+            </ol>
           </aside>
         </section>
         <section id="login" class="screen centered">
@@ -607,7 +542,7 @@
           © 2026 ESKA Judges Examination
         </span>
         <span data-i18n="footer">
-          Learn karate. Test your knowledge.
+          Precision in practice. Clarity in judgement.
         </span>
       </footer>
     </div>
