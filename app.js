@@ -162,14 +162,13 @@ function receiveParticipant(payload, restore = false) {
   if (payload.status === "waiting") {
     $("#lobbyName").textContent = payload.name;
     $("#lobbyExam").textContent = payload.title;
-    $("#lobbyTiming").textContent = payload.minutes ? payload.minutes + " minutes from the examination start" : "No time limit";
+    $("#lobbyTiming").textContent = "No time limit";
     $("#lobbyConnection").textContent = "● Connected – waiting for the administrator to start.";
     if (state.screen !== "lobby") showScreen("lobby");
   } else if (payload.status === "running" && state.screen !== "quiz") {
     showScreen("quiz");
     renderQuestion();
   }
-  updateClock();
 }
 
 function renderQuestion() {
@@ -201,7 +200,6 @@ function renderQuestion() {
   }
   $("#prevBtn").disabled = state.index === 0;
   $("#nextBtn span:first-child").textContent = labels[state.language][state.index === total - 1 ? "finish" : "next"];
-  updateClock();
 }
 
 function saveAnswers() {
@@ -214,21 +212,6 @@ function saveAnswers() {
     receiveParticipant(payload);
   });
   state.saving.catch(() => toast("Your answer has not been saved yet. Please check your connection."));
-}
-
-function updateClock() {
-  const participant = state.participant;
-  if (!participant || participant.result || state.screen !== "quiz") return;
-  const timer = $("#timer");
-  if (!participant.deadline) {
-    timer.textContent = labels[state.language].unlimited;
-    timer.classList.remove("urgent");
-    return;
-  }
-  const seconds = Math.max(0, Math.ceil((participant.deadline * 1000 - Date.now() - state.clockOffset) / 1000));
-  timer.textContent = Math.floor(seconds / 60) + ":" + String(seconds % 60).padStart(2, "0");
-  timer.classList.toggle("urgent", seconds <= 60);
-  if (seconds === 0 && !state.polling) poll();
 }
 
 async function submit() {
@@ -254,6 +237,7 @@ function renderResult() {
   $("#resultTitle").textContent = "Examination completed, " + name + ".";
   const pending = result.pending > 0;
   $("#resultMessage").textContent = pending ? "Submitted. " + result.pending + " written responses are awaiting administrator review." : result.passed ? words.passed : words.failed;
+  $("#resultRequirement").textContent = "Passing score: " + (result.passingPercent ?? 80) + "%";
   $("#scorePercent").textContent = pending ? "—" : result.percent + "%";
   $("#scoreRing").style.setProperty("--score", pending ? 0 : result.percent);
   $("#correctCount").textContent = result.correct + " / " + result.total;
@@ -297,8 +281,6 @@ function renderAdmin(payload) {
   if (selectedKey) selection.value = selectedKey;
   $("#examNotice").textContent = payload.exams.find((exam) => exam.id === selection.value)?.notice || "";
   selection.disabled = Boolean(active);
-  $("#timeLimit").disabled = Boolean(active);
-  if (active) $("#timeLimit").value = String(session.minutes);
   $("#activateBtn").disabled = Boolean(active);
   $("#qrPanel").hidden = !active;
   if (!active && $("#qrDialog").open) $("#qrDialog").close();
@@ -399,7 +381,7 @@ async function handleAction(action) {
     if (action === "close-qr") $("#qrDialog").close();
     if (action === "close-grading") $("#gradingDialog").close();
     if (action === "activate") {
-      await api("/api/admin/activate", { examKey: $("#examSelect").value, minutes: Number($("#timeLimit").value) });
+      await api("/api/admin/activate", { examKey: $("#examSelect").value, minutes: 0 });
       renderAdmin(await api("/api/admin/state"));
     }
     if (action === "session" || action === "close") {
@@ -615,7 +597,6 @@ async function initialize() {
   if (recovery.get("type") === "recovery" && recovery.get("access_token")) {
     state.recoveryToken = recovery.get("access_token");
     showScreen("passwordRecovery");
-    setInterval(updateClock, 1000);
     return;
   }
   if (recovery.get("error")) {
@@ -634,7 +615,6 @@ async function initialize() {
     }
   }
   setInterval(poll, 2000);
-  setInterval(updateClock, 1000);
 }
 
 initialize();

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261120b" />
+    <link rel="stylesheet" href="styles.css?v=20261123" />
   </head>
   <body>
     <div class="shell">
@@ -130,8 +130,8 @@
               <label for="participantExam">Examination</label>
               <select id="participantExam" required>
                 <option value="">Please select</option>
-                <option value="judge">Level B Judge — 41 questions</option>
-                <option value="referee">Level A Referee — 57 questions</option>
+                <option value="judge">Level B Judge — 41 questions · 80% to pass</option>
+                <option value="referee">Level A Referee — 57 questions · 90% to pass</option>
               </select>
               <p id="choiceError" class="form-error" role="alert"></p>
               <button class="btn primary full" type="submit">Join the waiting lobby →</button>
@@ -223,9 +223,6 @@
               </h2>
             </div>
             <div class="quiz-status">
-              <div class="timer" id="timer">
-                10:00
-              </div>
               <div class="progress-label">
                 <strong id="progressText">
                   1 / 10
@@ -284,6 +281,7 @@
             </h2>
             <p id="resultMessage">
             </p>
+            <p id="resultRequirement" class="privacy"></p>
             <div class="score-ring" id="scoreRing">
               <div>
                 <strong id="scorePercent">
@@ -390,32 +388,7 @@
               </select>
               <p id="examNotice" class="admin-note">
               </p>
-              <label for="timeLimit">
-                Time limit
-              </label>
-              <select id="timeLimit">
-                <option value="0">
-                  No time limit
-                </option>
-                <option value="5">
-                  5 Minutes
-                </option>
-                <option value="10" selected>
-                  10 Minutes
-                </option>
-                <option value="15">
-                  15 Minutes
-                </option>
-                <option value="20">
-                  20 Minutes
-                </option>
-                <option value="30">
-                  30 Minutes
-                </option>
-                <option value="60">
-                  60 Minutes
-                </option>
-              </select>
+              <p class="admin-note">No time limit. Level B Judge: 80% to pass. Level A Referee: 90% to pass.</p>
               <button class="btn primary full" id="activateBtn" data-action="activate">
                 Activate QR code
               </button>
@@ -573,7 +546,7 @@
       </form>
     </dialog>
     <script src="supabase-config.js?v=20260921"></script>
-    <script src="app.js?v=20261120b">
+    <script src="app.js?v=20261123">
     </script>
   </body>
 </html>
